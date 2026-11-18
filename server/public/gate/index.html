@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Welcome - Visitor Check-In</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Cinzel:wght@700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background: #090e1a;
+      color: #f8fafc;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* Header */
+    .header-card {
+      background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.9));
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      border-radius: 24px;
+      padding: 28px 24px;
+      text-align: center;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .header-card::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 150px;
+      height: 150px;
+      background: radial-gradient(circle, rgba(245, 158, 11, 0.25) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .gate-icon {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
+
+    .estate-title {
+      font-family: 'Cinzel', serif;
+      font-size: 20px;
+      letter-spacing: 2px;
+      color: #fbbf24;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .welcome-text {
+      font-size: 14px;
+      color: #94a3b8;
+      margin-top: 6px;
+    }
+
+    /* Form Card */
+    .form-card {
+      background: #111827;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-label {
+      font-size: 13px;
+      font-weight: 600;
+      color: #cbd5e1;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .required-star {
+      color: #ef4444;
+    }
+
+    .form-input {
+      background: #1f2937;
+      border: 1.5px solid rgba(255, 255, 255, 0.12);
+      color: #ffffff;
+      padding: 14px 18px;
+      border-radius: 14px;
+      font-size: 16px;
+      outline: none;
+      transition: all 0.3s ease;
+      font-family: inherit;
+    }
+
+    .form-input:focus {
+      border-color: #f59e0b;
+      box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.15);
+      background: #1e293b;
+    }
+
+    /* Photo Upload Box */
+    .photo-upload-zone {
+      border: 2px dashed rgba(245, 158, 11, 0.4);
+      background: rgba(245, 158, 11, 0.04);
+      border-radius: 16px;
+      padding: 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .photo-upload-zone:active {
+      transform: scale(0.98);
+      background: rgba(245, 158, 11, 0.08);
+    }
+
+    .upload-icon {
+      font-size: 36px;
+    }
+
+    .upload-prompt {
+      font-size: 14px;
+      font-weight: 600;
+      color: #f3f4f6;
+    }
+
+    .upload-sub {
+      font-size: 12px;
+      color: #94a3b8;
+    }
+
+    /* Thumbnail Previews */
+    .preview-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .preview-item {
+      position: relative;
+      height: 90px;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .preview-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .remove-btn {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      background: rgba(0, 0, 0, 0.7);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    /* Submit Button */
+    .submit-btn {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: #0f172a;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 16px;
+      border-radius: 14px;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 10px 25px rgba(245, 158, 11, 0.35);
+      transition: all 0.3s ease;
+      font-family: inherit;
+      margin-top: 10px;
+    }
+
+    .submit-btn:active {
+      transform: scale(0.98);
+      filter: brightness(0.9);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* Spinner */
+    .spinner {
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(0, 0, 0, 0.2);
+      border-top-color: #000;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    /* Success Screen Card */
+    #success-screen {
+      display: none;
+      background: linear-gradient(135deg, #064e3b 0%, #065f46 100%);
+      border: 2px solid #10b981;
+      border-radius: 24px;
+      padding: 36px 24px;
+      text-align: center;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .success-badge {
+      width: 70px;
+      height: 70px;
+      background: #10b981;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 32px;
+      box-shadow: 0 0 30px rgba(16, 185, 129, 0.5);
+    }
+
+    .success-title {
+      font-size: 24px;
+      font-weight: 700;
+      color: #ffffff;
+    }
+
+    .success-desc {
+      font-size: 15px;
+      color: #a7f3d0;
+      line-height: 1.5;
+    }
+
+    .live-tv-indicator {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 10px 20px;
+      border-radius: 30px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: #34d399;
+      font-weight: 600;
+      margin-top: 10px;
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      background: #34d399;
+      border-radius: 50%;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(52, 211, 153, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+    }
+
+    /* Footer */
+    .gate-footer {
+      text-align: center;
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <div class="header-card">
+      <div class="gate-icon">🚪✨</div>
+      <div class="estate-title">PATEL RESIDENCE</div>
+      <p class="welcome-text">Gate Visitor Check-In & TV Welcome Screen</p>
+    </div>
+
+    <!-- Check-In Form -->
+    <form id="visitor-form" class="form-card">
+      <div class="form-group" id="new-profile-toggle-group">
+        <button type="button" id="show-registration" class="submit-btn" style="background:linear-gradient(135deg,#38bdf8,#2563eb);margin-bottom:10px;">🆕 New visitor? Register your profile</button>
+      </div>
+      <div id="registration-panel" class="form-group" style="display:none;border:1px solid rgba(245,158,11,.5);padding:14px;border-radius:14px;">
+        <label class="form-label" for="register-name">Full name</label>
+        <input type="text" id="register-name" class="form-input" placeholder="Enter your full name" maxlength="100">
+        <label class="form-label" for="register-phone" style="margin-top:10px;">Mobile number</label>
+        <input type="tel" id="register-phone" class="form-input" placeholder="10-digit mobile number" maxlength="10" inputmode="numeric">
+        <button type="button" id="register-profile-btn" class="submit-btn" style="margin-top:12px;">Register Profile</button>
+        <small style="display:block;color:#94a3b8;margin-top:8px;">Your mobile number is used to find your profile on future visits. Do not use another person's number.</small>
+      </div>
+      <div id="profile-edit-panel" class="form-group" style="display:none;border:1px solid rgba(56,189,248,.45);padding:14px;border-radius:14px;">
+        <strong>👤 My Visitor Profile</strong>
+        <label class="form-label" for="profile-edit-name" style="margin-top:10px;">Update your name</label>
+        <input type="text" id="profile-edit-name" class="form-input" maxlength="100" placeholder="Your full name">
+        <button type="button" id="save-profile-btn" class="submit-btn" style="margin-top:8px;">Save Profile Changes</button>
+        <label class="form-label" style="margin-top:14px;">Add more photos to your profile</label>
+        <input type="file" id="profile-gallery-input" accept="image/*" multiple style="display:none;">
+        <button type="button" id="add-profile-photos-btn" class="submit-btn" style="background:linear-gradient(135deg,#38bdf8,#2563eb);">🖼️ Choose Photos from Gallery</button>
+        <small style="display:block;color:#94a3b8;margin-top:8px;">You can add multiple photos from your phone gallery. They will be saved to your profile for future visits.</small>
+      </div>
+      <div class="form-group" id="existing-profile-group">
+        <label class="form-label" for="existing-profile"><span>Select Your Existing Visitor Profile</span><span class="required-star">*</span></label>
+        <select id="existing-profile" class="form-input" required><option value="">Loading registered profiles…</option></select>
+        <small id="profile-status" style="display:block;color:#64748b;margin-top:8px;">Scan the common QR. This registered device will be recognized automatically.</small>
+      </div>
+      <div class="form-group" id="visitor-name-group">
+        <label class="form-label" for="visitor-name">
+          <span>Your Full Name / Family Name</span>
+          <span class="required-star">*</span>
+        </label>
+        <input type="text" id="visitor-name" class="form-input" placeholder="e.g. Ramesh Patel & Family" required>
+      </div>
+
+      <div class="form-group" id="visitor-phone-group">
+        <label class="form-label" for="visitor-phone">
+          <span>Mobile Number (Optional)</span>
+        </label>
+        <input type="tel" id="visitor-phone" class="form-input" placeholder="e.g. 98765 43210" maxlength="14" required>
+
+      </div>
+
+      <!-- Previous registered photos -->
+      <div class="form-group" id="previous-photos-section" style="display:none;">
+        <label class="form-label"><span>Your Previous Photos (select what you want to show)</span></label>
+        <div id="previous-photos-grid" class="preview-grid"></div>
+      </div>
+
+      <!-- Photo Upload -->
+      <div class="form-group">
+        <label class="form-label">
+          <span>Group Photo / Selfie with Host</span>
+        </label>
+
+        <input type="file" id="file-input" accept="image/*" multiple style="display: none;">
+        <input type="file" id="camera-input" accept="image/*" capture="environment" multiple style="display:none;">
+        
+        <div class="photo-upload-zone" onclick="document.getElementById('file-input').click()">
+          <div class="upload-icon">🖼️</div>
+          <div class="upload-prompt">Tap to Choose Photos from Gallery</div>
+          <div class="upload-sub">Select existing images on your mobile device.</div>
+        </div>
+        <button type="button" class="submit-btn" style="margin-top:8px;background:linear-gradient(135deg,#38bdf8,#2563eb);" onclick="document.getElementById('camera-input').click()">📷 Take Photo with Camera</button>
+
+        <div class="preview-grid" id="preview-grid"></div>
+      </div>
+
+      <div class="form-group" style="margin-top:12px;">
+        <label style="display:flex;gap:10px;align-items:flex-start;color:#334155;font-size:14px;line-height:1.45;">
+          <input type="checkbox" id="photo-consent" required style="margin-top:3px;">
+          I consent to the photos I selected being displayed on the residence TV screens during this visit.
+        </label>
+      </div>
+
+      <!-- Submit -->
+      <button type="submit" id="submit-btn" class="submit-btn">
+        <span id="btn-text">Check In & Broadcast to TVs</span>
+        <div id="btn-spinner" class="spinner" style="display: none;"></div>
+      </button>
+    </form>
+
+    <!-- Success Confirmation -->
+    <div id="success-screen">
+      <div class="success-badge">✓</div>
+      <h2 class="success-title">Welcome to Patel Residence!</h2>
+      <p class="success-desc" id="success-message">
+        Thank you! Your photo and welcome announcement are now playing live across all 3 residence smart TVs.
+      </p>
+
+      <div class="live-tv-indicator">
+        <div class="pulse-dot"></div>
+        <span>Broadcasting Live to 3 TVs (5 Min Welcome)</span>
+      </div>
+
+      <button onclick="resetForm()" style="background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: white; padding: 12px 24px; border-radius: 12px; margin-top: 15px; cursor: pointer; font-family: inherit; font-weight: 600;">
+        Check-In Another Visitor
+      </button>
+    </div>
+
+    <div class="gate-footer">
+      Powered by Smart TV Visitor Welcome Hub • webOS 22 Realtime Sync
+    </div>
+  </div>
+
+  <script>
+    const fileInput = document.getElementById('file-input');
+    const cameraInput = document.getElementById('camera-input');
+    const profileGalleryInput = document.getElementById('profile-gallery-input');
+    const previewGrid = document.getElementById('preview-grid');
+    const visitorForm = document.getElementById('visitor-form');
+    const submitBtn = document.getElementById('submit-btn');
+    const btnText = document.getElementById('btn-text');
+    const btnSpinner = document.getElementById('btn-spinner');
+    const successScreen = document.getElementById('success-screen');
+    const phoneInput = document.getElementById('visitor-phone');
+    const profileStatus = document.getElementById('profile-status');
+    const previousSection = document.getElementById('previous-photos-section');
+    const previousGrid = document.getElementById('previous-photos-grid');
+    const profileSelect = document.getElementById('existing-profile');
+    let selectedProfileId = '';
+    const registrationPanel = document.getElementById('registration-panel');
+    const profileEditPanel = document.getElementById('profile-edit-panel');
+    document.getElementById('show-registration').addEventListener('click', () => {
+      registrationPanel.style.display = registrationPanel.style.display === 'none' ? 'block' : 'none';
+    });
+    document.getElementById('register-profile-btn').addEventListener('click', async () => {
+      const regName = document.getElementById('register-name').value.trim();
+      const regPhone = document.getElementById('register-phone').value.replace(/\D/g, '').slice(-10);
+      if (regName.length < 2) return alert('Please enter your full name.');
+      if (regPhone.length !== 10) return alert('Please enter a valid 10-digit mobile number.');
+      const button = document.getElementById('register-profile-btn'); button.disabled = true; button.textContent = 'Registering…';
+      try {
+        const response = await fetch('/api/visitor/register-profile', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: regName, phone: regPhone }) });
+        const result = await response.json();
+        if (!response.ok || !result.success) { alert(result.message || 'Profile registration failed.'); return; }
+        deviceToken = result.deviceToken || '';
+        if (!deviceToken) { alert('Registration completed, but device link token was not returned.'); return; }
+        localStorage.setItem('visitorDeviceToken', deviceToken);
+        registrationPanel.style.display = 'none';
+        document.getElementById('new-profile-toggle-group').style.display = 'none';
+        document.getElementById('existing-profile-group').style.display = 'none';
+        profileSelect.required = false;
+        await loadDeviceProfile(false);
+        profileEditPanel.style.display = 'block';
+        alert('Profile registered and this phone is linked. Upload/select photos, give consent, then check in. On future scans this phone will be recognized automatically.');
+      } catch (err) { alert('Could not register profile. Check your connection.'); }
+      finally { button.disabled = false; button.textContent = 'Register Profile'; }
+    });
+
+    let selectedFiles = [];
+    let previousPhotoUrls = [];
+    let selectedPreviousPhotoUrls = [];
+    let lookupTimer = null;
+    const personalToken = new URLSearchParams(location.search).get('token') || '';
+    let deviceToken = localStorage.getItem('visitorDeviceToken') || '';
+    if (personalToken) { document.getElementById('existing-profile-group').style.display = 'none'; profileSelect.required = false; loadPersonalQrProfile(); }
+    else if (deviceToken) {
+      document.getElementById('new-profile-toggle-group').style.display = 'none';
+      document.getElementById('registration-panel').style.display = 'none';
+      document.getElementById('existing-profile-group').style.display = 'none';
+      profileSelect.required = false;
+      loadDeviceProfile(true);
+    } else {
+      document.getElementById('existing-profile-group').style.display = 'none';
+      profileSelect.required = false;
+      document.getElementById('visitor-name-group').style.display = 'none';
+      document.getElementById('visitor-phone-group').style.display = 'none';
+      profileStatus.innerText = 'New visitor? Register once on this phone. Future scans of the common QR will recognize this device.';
+    }
+
+    async function loadDeviceProfile(autoBroadcast) {
+      profileStatus.innerText = 'Recognizing your registered visitor profile…';
+      try {
+        const response = await fetch('/api/visitor/device-profile?deviceToken=' + encodeURIComponent(deviceToken));
+        const result = await response.json();
+        if (!response.ok || !result.success) {
+          localStorage.removeItem('visitorDeviceToken'); deviceToken = '';
+          document.getElementById('new-profile-toggle-group').style.display = 'block';
+          profileStatus.innerText = result.message || 'This phone is not linked. Register your visitor profile first.';
+          return;
+        }
+        document.getElementById('visitor-name').value = result.name || '';
+        document.getElementById('profile-edit-name').value = result.name || '';
+        profileEditPanel.style.display = 'block';
+        phoneInput.value = result.phone || '';
+        previousPhotoUrls = result.photos || [];
+        selectedPreviousPhotoUrls = [...previousPhotoUrls];
+        profileStatus.innerText = `Profile recognized: ${result.name}. Your saved photos are loaded.`;
+        renderPreviousPhotos();
+        if (autoBroadcast && result.consentToDisplay && previousPhotoUrls.length) {
+          profileStatus.innerText = `Welcome back, ${result.name}. Sending your saved photos to the TVs…`;
+          const autoResponse = await fetch('/api/visitor/auto-checkin', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ deviceToken }) });
+          const autoResult = await autoResponse.json();
+          if (autoResponse.ok && autoResult.success) {
+            visitorForm.style.display = 'none'; successScreen.style.display = 'flex';
+            document.getElementById('success-message').innerText = autoResult.message || `Welcome back, ${result.name}! Your photos are now playing on the residence TVs.`;
+          } else { profileStatus.innerText = autoResult.message || 'Profile recognized. Please confirm consent and check in.'; }
+        } else if (autoBroadcast) {
+          profileStatus.innerText = result.photos.length ? 'Profile recognized. Please confirm consent and check in to display your photos.' : 'Profile recognized, but no saved photos yet. Add photos and check in.';
+        }
+      } catch (e) { profileStatus.innerText = 'Unable to recognize profile. Check server connection.'; }
+    }
+
+    async function loadCommonQrProfiles() { /* profile directory intentionally disabled: common QR must not expose a visitor list */ }
+
+    profileSelect.addEventListener('change', async () => {
+      selectedProfileId = profileSelect.value;
+      previousPhotoUrls = []; selectedPreviousPhotoUrls = []; previousGrid.innerHTML = ''; previousSection.style.display = 'none';
+      if (!selectedProfileId) { profileStatus.innerText = 'Visitor profile selection is disabled for privacy.'; return; }
+      profileStatus.innerText = 'Profile list selection is disabled. Use your registered device.';
+    });
+
+    async function loadPersonalQrProfile() {
+      document.getElementById('visitor-name-group').style.display = 'none';
+      document.getElementById('visitor-phone-group').style.display = 'none';
+      profileStatus.innerText = 'Loading your personal visitor profile…';
+      try {
+        const response = await fetch('/api/visitor/profile?token=' + encodeURIComponent(personalToken));
+        const result = await response.json();
+        if (!result.success) { profileStatus.innerText = result.message || 'Personal QR could not be verified.'; return; }
+        document.getElementById('visitor-name').value = result.name || '';
+        document.getElementById('profile-edit-name').value = result.name || '';
+        profileEditPanel.style.display = 'block';
+        phoneInput.value = result.phone || '';
+        previousPhotoUrls = result.photos || [];
+        selectedPreviousPhotoUrls = [...previousPhotoUrls];
+        profileStatus.innerText = `Welcome back, ${result.name}. Your profile was recognized; choose photos for this visit.`;
+        renderPreviousPhotos();
+      } catch (e) { profileStatus.innerText = 'Unable to load profile. Check the server connection.'; }
+    }
+
+    async function lookupVisitorProfile() {
+      const digits = phoneInput.value.replace(/\D/g, '').slice(-10);
+      previousPhotoUrls = [];
+      selectedPreviousPhotoUrls = [];
+      previousGrid.innerHTML = '';
+      previousSection.style.display = 'none';
+      if (digits.length !== 10) { profileStatus.innerText = 'Enter a valid 10-digit mobile number to find previous photos.'; return; }
+      profileStatus.innerText = 'Looking up your profile…';
+      try {
+        const response = await fetch('/api/visitor/profile?phone=' + encodeURIComponent(digits));
+        const result = await response.json();
+        if (!result.success) { profileStatus.innerText = result.message || 'Profile lookup failed.'; return; }
+        if (result.returningVisitor) {
+          previousPhotoUrls = result.photos || [];
+          // Initially select previous photos; visitor can deselect based on their preference.
+          selectedPreviousPhotoUrls = [...previousPhotoUrls];
+          if (!document.getElementById('visitor-name').value.trim()) document.getElementById('visitor-name').value = result.name || '';
+          profileStatus.innerText = `Returning visitor found. ${previousPhotoUrls.length} previous photo(s) available; uncheck any you do not want shown.`;
+          renderPreviousPhotos();
+        } else {
+          profileStatus.innerText = 'No previous profile found. You can register by adding your name and photos.';
+        }
+      } catch (err) { profileStatus.innerText = 'Could not look up profile. Check your connection and try again.'; }
+    }
+    phoneInput.addEventListener('change', lookupVisitorProfile);
+    phoneInput.addEventListener('blur', lookupVisitorProfile);
+
+    function renderPreviousPhotos() {
+      previousGrid.innerHTML = '';
+      if (!previousPhotoUrls.length) { previousSection.style.display = 'none'; return; }
+      previousSection.style.display = 'block';
+      previousPhotoUrls.forEach((url, index) => {
+        const item = document.createElement('div');
+        item.className = 'preview-item';
+        item.style.position = 'relative';
+        const img = document.createElement('img');
+        img.src = url; img.alt = 'Previous visitor photo ' + (index + 1);
+        const label = document.createElement('label');
+        label.style.cssText = 'position:absolute;left:6px;right:6px;bottom:6px;background:rgba(15,23,42,.82);color:white;padding:5px;border-radius:6px;font-size:11px;display:flex;gap:5px;align-items:center;';
+        const checkbox = document.createElement('input'); checkbox.type = 'checkbox'; checkbox.checked = selectedPreviousPhotoUrls.includes(url);
+        checkbox.addEventListener('change', () => {
+          if (checkbox.checked) { if (!selectedPreviousPhotoUrls.includes(url)) selectedPreviousPhotoUrls.push(url); }
+          else selectedPreviousPhotoUrls = selectedPreviousPhotoUrls.filter(item => item !== url);
+        });
+        label.appendChild(checkbox); label.appendChild(document.createTextNode('Show on TV'));
+        item.appendChild(img); item.appendChild(label); previousGrid.appendChild(item);
+      });
+    }
+
+    // Client-side Image Compression (Reduces 15MB phone photos to ~600KB JPEG)
+    async function compressImage(file) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = (e) => {
+          const img = new Image();
+          img.src = e.target.result;
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            let width = img.width;
+            let height = img.height;
+            const maxDimension = 1600;
+
+            if (width > maxDimension || height > maxDimension) {
+              if (width > height) {
+                height = Math.round((height * maxDimension) / width);
+                width = maxDimension;
+              } else {
+                width = Math.round((width * maxDimension) / height);
+                height = maxDimension;
+              }
+            }
+
+            canvas.width = width;
+            canvas.height = height;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, width, height);
+
+            canvas.toBlob((blob) => {
+              resolve(new File([blob], file.name.replace(/\.[^/.]+$/, ".jpg"), { type: 'image/jpeg' }));
+            }, 'image/jpeg', 0.85);
+          };
+        };
+      });
+    }
+
+    // Handle Gallery and Camera file selections
+    async function handlePhotoSelection(e) {
+      const files = Array.from(e.target.files);
+      if (selectedFiles.length + files.length > 5) { alert('You can upload up to 5 new photos per check-in.'); fileInput.value = ''; return; }
+      for (const file of files) {
+        if (!file.type.startsWith('image/')) { alert('Please choose image files only.'); continue; }
+        const compressed = await compressImage(file);
+        selectedFiles.push(compressed);
+      }
+      renderPreviews();
+      e.target.value = '';
+    }
+    fileInput.addEventListener('change', handlePhotoSelection);
+    cameraInput.addEventListener('change', handlePhotoSelection);
+
+    // Update visitor's own profile using the linked device token.
+    document.getElementById('save-profile-btn').addEventListener('click', async () => {
+      const newName = document.getElementById('profile-edit-name').value.trim();
+      if (newName.length < 2) return alert('Please enter a name with at least 2 characters.');
+      if (!deviceToken) return alert('This phone is not linked to a visitor profile. Please register first.');
+      try {
+        const response = await fetch('/api/visitor/update-profile', { method:'PUT', headers:{'Content-Type':'application/json'}, body:JSON.stringify({deviceToken, name:newName}) });
+        const result = await response.json();
+        if (!response.ok || !result.success) throw new Error(result.message || 'Profile update failed.');
+        document.getElementById('visitor-name').value = result.profile.name;
+        profileStatus.innerText = 'Your profile was updated successfully.';
+        alert('Profile updated successfully.');
+      } catch (err) { alert(err.message); }
+    });
+
+    document.getElementById('add-profile-photos-btn').addEventListener('click', () => {
+      if (!deviceToken) return alert('Register/link this phone to your profile first.');
+      profileGalleryInput.click();
+    });
+    profileGalleryInput.addEventListener('change', async (e) => {
+      const files = Array.from(e.target.files || []);
+      if (!files.length) return;
+      if (files.length > 10) { alert('Choose up to 10 photos at a time.'); e.target.value=''; return; }
+      const button = document.getElementById('add-profile-photos-btn'); button.disabled=true; button.textContent='Uploading photos…';
+      try {
+        const formData = new FormData(); formData.append('deviceToken', deviceToken);
+        for (const file of files) { if (!file.type.startsWith('image/')) throw new Error('Please select image files only.'); formData.append('photos', await compressImage(file)); }
+        const response = await fetch('/api/visitor/profile-photos', { method:'POST', body:formData });
+        const result = await response.json();
+        if (!response.ok || !result.success) throw new Error(result.message || 'Photo upload failed.');
+        previousPhotoUrls = result.photos || []; selectedPreviousPhotoUrls = [...previousPhotoUrls]; renderPreviousPhotos();
+        profileStatus.innerText = `Saved ${files.length} new photo(s) to your profile. They are available on future visits.`;
+        alert(`Successfully added ${files.length} photo(s) to your profile.`);
+      } catch (err) { alert(err.message); }
+      finally { button.disabled=false; button.textContent='🖼️ Choose Photos from Gallery'; e.target.value=''; }
+    });
+
+    function renderPreviews() {
+      previewGrid.innerHTML = '';
+      selectedFiles.forEach((file, index) => {
+        const url = URL.createObjectURL(file);
+        const item = document.createElement('div');
+        item.className = 'preview-item';
+        item.innerHTML = `
+          <img src="${url}">
+          <button type="button" class="remove-btn" onclick="removePhoto(${index})">✕</button>
+        `;
+        previewGrid.appendChild(item);
+      });
+    }
+
+    window.removePhoto = (index) => {
+      selectedFiles.splice(index, 1);
+      renderPreviews();
+    };
+
+    // Form Submission
+    visitorForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const name = document.getElementById('visitor-name').value.trim();
+      const phone = document.getElementById('visitor-phone').value.trim();
+      const consent = document.getElementById('photo-consent').checked;
+
+      if (!personalToken && !selectedProfileId && !deviceToken) return alert('Please register this device to your visitor profile first.');
+      if (personalToken && !name) return alert('Visitor profile could not be loaded.');
+      if ((personalToken || selectedProfileId) && phone.replace(/\D/g, '').slice(-10).length !== 10) return alert('Visitor profile has no valid mobile number.');
+      if (!consent) return alert('Please provide consent before displaying photos on the TV.');
+      if (!selectedFiles.length && !selectedPreviousPhotoUrls.length) return alert('Select previous photos or upload at least one new photo.');
+
+      submitBtn.disabled = true;
+      btnText.style.display = 'none';
+      btnSpinner.style.display = 'block';
+
+      try {
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('phone', phone);
+        formData.append('consentToDisplay', 'true');
+        if (personalToken) formData.append('visitorToken', personalToken);
+        if (selectedProfileId && !personalToken && !deviceToken) formData.append('selectedProfileId', selectedProfileId);
+        if (deviceToken && !personalToken) formData.append('deviceToken', deviceToken);
+        formData.append('selectedPhotoUrls', JSON.stringify(selectedPreviousPhotoUrls));
+        selectedFiles.forEach(file => {
+          formData.append('photos', file);
+        });
+
+        const response = await fetch('/api/visitor/checkin', {
+          method: 'POST',
+          body: formData
+        });
+        const result = await response.json();
+
+        if (result.success) {
+          visitorForm.style.display = 'none';
+          successScreen.style.display = 'flex';
+          document.getElementById('success-message').innerText =
+            `Thank you ${name}! Your selected previous and new photos are now being shown on the residence screens.`;
+        } else {
+          alert('Submission error: ' + (result.message || 'Unknown error'));
+        }
+      } catch (err) {
+        console.error('Checkin error:', err);
+        alert('Network error. Please try again.');
+      } finally {
+        submitBtn.disabled = false;
+        btnText.style.display = 'block';
+        btnSpinner.style.display = 'none';
+      }
+    });
+
+    window.resetForm = () => {
+      selectedFiles = [];
+      previousPhotoUrls = [];
+      selectedPreviousPhotoUrls = [];
+      renderPreviews();
+      previousGrid.innerHTML = '';
+      previousSection.style.display = 'none';
+      selectedProfileId = ''; profileSelect.value = '';
+      profileStatus.innerText = personalToken ? 'Personal QR profile will be loaded again when you refresh.' : 'Select your registered profile to load saved photos.';
+      visitorForm.reset();
+      visitorForm.style.display = 'flex';
+      successScreen.style.display = 'none';
+    };
+  </script>
+</body>
+</html>
