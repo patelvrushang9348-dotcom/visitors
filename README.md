@@ -12,11 +12,11 @@
 | Document | Topic & Focus Area | Description |
 | :--- | :--- | :--- |
 | [01_INTRODUCTION_AND_OVERVIEW.md](file:///e:/project/visitor/docs/01_INTRODUCTION_AND_OVERVIEW.md) | **Introduction & Architecture** | Project vision, problem statement, core 4 components, and end-to-end data flow. |
-| [02_TECH_STACK_AND_DECISIONS.md](file:///e:/project/visitor/docs/02_TECH_STACK_AND_DECISIONS.md) | **Tech Stack & Architectural Decisions** | Choosing Node.js, WebSockets, Flutter (with MVVM), and webOS HTML5 creates a modern, scalable, and real-time multi-platform ecosystem. This specific tech stack is designed for applications where a mobile device acts as a controller or companion to a smart TV (LG webOS), requiring instant, two-way communication. |
+| [02_TECH_STACK_AND_DECISIONS.md](file:///e:/project/visitor/docs/02_TECH_STACK_AND_DECISIONS.md) | **Tech Stack & Architectural Decisions** | Choosing Node.js, WebSockets, Flutter (with MVVM), and webOS HTML5 creates a modern, scalable, and real-time multi-platform ecosystem. This specific tech stack is designed for applications where a mobile device acts as a controller or companion to a smart TV (LG webOS). |
 | [03_LOCAL_SETUP_AND_SIMULATOR_GUIDE.md](file:///e:/project/visitor/docs/03_LOCAL_SETUP_AND_SIMULATOR_GUIDE.md) | **Localhost & Simulator Setup** |To run a backend on your Windows machine, launch your app in the webOS TV 22 Simulator, and perform live testing. |
 | [04_PRODUCTION_DEPLOYMENT_AND_TV_INSTALLATION.md](file:///e:/project/visitor/docs/04_PRODUCTION_DEPLOYMENT_AND_TV_INSTALLATION.md) | **Production Hosting & TV Deployment** | Real project hosting (Cloud/Local Mini PC), SSL HTTPS setup, webOS IPK packaging, and physical TV deployment. |
 | [05_USER_ROLES_PERMISSIONS_AND_SECURITY.md](file:///e:/project/visitor/docs/05_USER_ROLES_PERMISSIONS_AND_SECURITY.md) | **Roles, Permissions & Security** | Visitor, Admin, aur TV Displays ke rights, moderation privacy, aur security best practices. |
-| [06_API_AND_WEBSOCKET_SPECIFICATION.md](file:///e:/project/visitor/docs/06_API_AND_WEBSOCKET_SPECIFICATION.md) | **API & WebSocket Specifications** | complete reference of REST endpoints, WebSocket event payloads, aur database structure. |
+| [06_API_AND_WEBSOCKET_SPECIFICATION.md](file:///e:/project/visitor/docs/06_API_AND_WEBSOCKET_SPECIFICATION.md) | **API & WebSocket Specifications** | complete reference of REST endpoints, WebSocket event payloads, and database structure. |
 
 ---
 
