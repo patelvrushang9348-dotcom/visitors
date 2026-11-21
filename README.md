@@ -7,7 +7,7 @@
 
 ## 📑 Project Documentation Index
 
-Aapke project ke sabhi technical, architectural, setup aur deployment aspects ko detail me cover karne ke liye separate dedicated manuals create kiye gaye hain:
+"Separate dedicated manuals have been created to cover all the technical, architectural, setup, and deployment aspects of your project in detail:"
 
 | Document | Topic & Focus Area | Description |
 | :--- | :--- | :--- |
